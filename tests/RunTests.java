@@ -2,8 +2,6 @@ package com.example.android_start_app;
 
 import org.junit.runner.*;
 
-
-
 public class RunTests {
 
     public static void main(String[] args) {

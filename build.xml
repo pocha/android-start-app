@@ -17,38 +17,11 @@
 			<include name="**/org.eclipse.*.jar"/>
 			<include name="**/runtime*.jar"/>
 		</fileset>
-	
-	    
-	 <path id="test_run_classpath">
-	     <fileset refid="plugin_jars"/>
-	 </path>
 
-	<filelist id="android_jars" dir="${libs.dir}">
-		<file name="android-support-v4.jar"/>
-		<file name="maps.jar"/>
-	</filelist>
-
-	<filelist id="libs_jars" dir="${libs.dir}">
-		<file name="junit.jar"/>
-		<file name="hamcrest.jar"/>
-		<file name="robolectric-with-dependencies.jar"/>
-		<file name="tests.jar"/>
-	</filelist>
-
-	<path id="compile_classpath">
-		<filelist refid="libs_jars"/>
-		<filelist refid="android_jars"/>
+	<path id="classpath">
 		<fileset refid="plugin_jars"/>
-		<pathelement path="${android.project.classpath}"/>
-		<pathelement path="${build.dir}"/>
-	</path>
-
-	<path id="junit_classpath">
 		<pathelement path="${build.dir}"/>
 		<pathelement path="${android.project.classpath}"/>
-		<!-- NOTE: junit.jar must come before android.jar! -->
-		<filelist refid="libs_jars"/>
-		<filelist refid="android_jars"/>
 	</path>
 	
 	<!-- targets -->
@@ -61,7 +34,7 @@
 
 	<target name="compile" depends="init" description="compile test source">
 		<javac srcdir="${source.dir}" destdir="${build.dir}" debug="true" >
-			<classpath refid="compile_classpath" />
+			<classpath refid="classpath" />
 		</javac>
 	</target>
 
@@ -76,7 +49,7 @@
 					<include name="**/*Test.java"/>
 				</fileset>
 			</batchtest>
-			<classpath refid="junit_classpath"/>
+			<classpath refid="classpath"/>
 		</junit>
 		<fail if="junit.failure" message="Unit test(s) failed. See reports!"/>
 		
@@ -84,15 +57,13 @@
 	
 	
 	<target name="test-run" depends="compile">
-	    <java classname="com.example.android_start_app.DialogExamples">
+	    <java classname="com.example.android_start_app.RunTests">
 	        <!-- <classpath path="${eclipse.dropins.dir}/dropins/hello-plugin_1.0.0.201310101506.jar"/> -->
-	        <classpath refid="test_run_classpath"/>
-	        <classpath path="${build.dir}"/>
+	        <classpath refid="classpath"/>
 	    </java>
-	    <!--  <echo message="${eclipse.dropins.dir}"/> -->
+	    <!--  <echo message="${eclipse.dropins.dir}"> -->
 	</target>
 	
-
 	<target name="test-report-junit" depends="test-run" description="Generate JUnit HTML reports">
 		<mkdir dir="${test.html.dir}"/>
 		<junitreport todir="${test.report.dir}">
