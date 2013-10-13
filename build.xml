@@ -2,7 +2,6 @@
 	<description>
 		Android-Project-Test - Robolectric Tests for Android Application
 	</description>
-
 	<!-- set global properties for this build -->
 	
 	<property name="libs.dir" value="./libs/"/>
@@ -11,6 +10,18 @@
 	<property name="test.report.dir" value="./test-reports/"/>
 	<property name="test.html.dir" value="./test-report-html/"/>
 	<property name="source.dir" value="./src/"/>	
+	<property name="eclipse.dropins.dir" value="/arbit/path/to/eclipse/dropins" />
+	
+	    <fileset id="plugin_jars" dir="${eclipse.dropins.dir}">
+			<include name="dropins/*.jar"/>
+			<include name="**/org.eclipse.*.jar"/>
+			<include name="**/runtime*.jar"/>
+		</fileset>
+	
+	    
+	 <path id="test_run_classpath">
+	     <fileset refid="plugin_jars"/>
+	 </path>
 
 	<filelist id="android_jars" dir="${libs.dir}">
 		<file name="android-support-v4.jar"/>
@@ -27,6 +38,7 @@
 	<path id="compile_classpath">
 		<filelist refid="libs_jars"/>
 		<filelist refid="android_jars"/>
+		<fileset refid="plugin_jars"/>
 		<pathelement path="${android.project.classpath}"/>
 		<pathelement path="${build.dir}"/>
 	</path>
@@ -72,10 +84,14 @@
 	
 	
 	<target name="test-run" depends="compile">
-	    <java classname="com.example.android_start_app.RunTests">
-	        <classpath refid="junit_classpath"/>     
+	    <java classname="com.example.android_start_app.DialogExamples">
+	        <!-- <classpath path="${eclipse.dropins.dir}/dropins/hello-plugin_1.0.0.201310101506.jar"/> -->
+	        <classpath refid="test_run_classpath"/>
+	        <classpath path="${build.dir}"/>
 	    </java>
+	    <!--  <echo message="${eclipse.dropins.dir}"/> -->
 	</target>
+	
 
 	<target name="test-report-junit" depends="test-run" description="Generate JUnit HTML reports">
 		<mkdir dir="${test.html.dir}"/>
