@@ -10,7 +10,9 @@ import java.util.Properties;
 
 import com.example.android_start_app.DialogExamples;
 import org.eclipse.jface.window.ApplicationWindow;
-
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import com.example.android_start_app.HttpRequest;
 
 
 public class RunTests {
@@ -44,9 +46,20 @@ public class RunTests {
     	JUnitCore junit = new JUnitCore();
     	Result result = junit.run(com.example.android_start_app.MainActivityTest.class);
     	System.out.println("completed " + result.getRunCount() + " tests");
-    	System.out.println("No. of failed test cases="+result.getFailures().size());  
+    	System.out.println("No. of failed test cases="+result.getFailures().size());
+    	
+    	JSONObject obj = new JSONObject();
+    	JSONArray failureList = new JSONArray();
         for (Failure failure : result.getFailures())
-            System.out.println("Failure message " + failure.toString()); 
-     }
+            //System.out.println("Failure message " + failure.toString()); 
+        	failureList.add(failure.toString());
+        	
+        obj.put("username",username);
+        obj.put("failures", failureList);
+    	
+    	System.out.println(obj.toString());
+    	
+    	HttpRequest.main(obj.toString());
+     }			
 
 }

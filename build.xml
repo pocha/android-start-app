@@ -11,11 +11,12 @@
 	<property name="test.html.dir" value="./test-report-html/"/>
 	<property name="source.dir" value="./src/"/>	
 	<property name="eclipse.dropins.dir" value="/arbit/path/to/eclipse/dropins" />
-	
+
 	    <fileset id="plugin_jars" dir="${eclipse.dropins.dir}">
 			<include name="dropins/*.jar"/>
 			<include name="**/org.eclipse.*.jar"/>
 			<include name="**/runtime*.jar"/>
+			<include name="**/org.apache.commons.logging*.jar"/>
 		</fileset>
 
 	<path id="classpath">
@@ -79,3 +80,4 @@
 		<delete file="${basedir}/tmp/cached-robolectric-classes.jar"/>
 	</target>
 </project>
+
