@@ -11,10 +11,9 @@ import java.io.OutputStreamWriter;
 
 public class HttpRequest {
 	public static void main(String message) {
-    
 		//String message = "my message";
     try {
-        URL url = new URL("http://192.168.1.102:3000/reports/incoming");
+        URL url = new URL("http://androidtutorial.herokuapp.com/reports/incoming");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
