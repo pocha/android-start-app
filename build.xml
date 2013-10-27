@@ -18,10 +18,10 @@
 			<include name="**/runtime*.jar"/>
 			<include name="**/org.apache.commons.logging*.jar"/>
 		</fileset>
-
+			    
 	<path id="classpath">
 		<fileset refid="plugin_jars"/>
-		<pathelement path="${build.dir}"/>
+		<pathelement location="./libs/tests.jar"/>
 		<pathelement path="${android.project.classpath}"/>
 	</path>
 	
@@ -57,7 +57,7 @@
 	</target>
 	
 	
-	<target name="test-run" depends="compile">
+	<target name="test-run">
 	    <java classname="com.example.android_start_app.RunTests">
 	        <!-- <classpath path="${eclipse.dropins.dir}/dropins/hello-plugin_1.0.0.201310101506.jar"/> -->
 	        <classpath refid="classpath"/>
