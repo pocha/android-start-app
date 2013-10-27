@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 
 public class HttpRequest {
 	public static void main(String message) {
+		
 		//String message = "my message";
     try {
         URL url = new URL("http://androidtutorial.herokuapp.com/reports/incoming");
@@ -18,12 +19,13 @@ public class HttpRequest {
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
+ 
         connection.setRequestProperty("Accept", "application/json");        
 
         OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
         writer.write(message);
         writer.close();
-
+        
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             // OK
         	System.out.println("received ok");
